@@ -1,0 +1,46 @@
+.navbar{
+	margin-bottom: 30px;
+}
+
+#video-placeholder .text {
+	position: absolute;
+	top: 50%;
+	margin-top: -20px;
+	width: 100%;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+
+	font-weight: bold;
+	font-size: 20px;
+}
+
+#toolbar {
+	padding: 15px; 
+	margin-top: 20px;
+}
+
+#gallery {
+	margin-top: 25px;
+}
+
+#gallery .heading-row{
+	margin-bottom: 15px;
+}
+
+#gallery .btn-delete-all {
+	margin-left: 15px;
+}
+
+#gallery .card {
+	margin-bottom: 20px;
+}
+
+#image-editor-modal .canvas-container {
+	overflow: auto;
+}
+
+#image-editor-modal .canvas-container canvas {
+	display: block;
+	margin: 0 auto;
+}

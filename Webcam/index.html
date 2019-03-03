@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="pl">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Webcam</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/main.css">
+
+        <!--
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+        -->
+
+        <link rel="stylesheet" href="vendor/magnific-popup/magnific-popup.css">
+    </head>
+    <body>
+
+        <nav class="navbar navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">Photo generator!</a>
+        </nav>
+
+        <!-- div.form-group>textarea.form-control -->
+        <div class="container">
+
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-8">
+                    <div class="border bg-light embed-responsive embed-responsive-4by3" id="video-placeholder">
+                        <div class="text">Czekam na obraz z kamery...</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="bg-light text-center" id="toolbar">
+
+                        <button id="get-webcam-btn" class="btn btn-primary">
+                            Uruchom kamerę
+                        </button>
+
+                        <button id="take-photo-btn" class="btn btn-success" disabled>Zrób zdjęcie</button>
+
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+
+            <section id="gallery">
+                <div class="row heading-row">
+                    <div class="col-12">
+                        <h4 class="float-left">Twoje zdjęcia</h4>
+                        <button class="btn btn-danger btn-sm btn-delete-all js--delete-all-gallery-items">Usuń wszystkie</button>
+                    </div>
+                </div>
+
+                <div class="row" id="gallery-list">
+                    <!--
+                    .col-xs-12.col-sm-6.col-md-4.col-lg-3*15>.card>(img.card-img-top[src="http://via.placeholder.com/350x150"])+div.card-body.text-center>a[href=#].btn.btn-primary.btn-sm{Pobierz}+button.btn.btn-danger.btn-sm{Usuń}+button.btn.btn-success.btn-sm{Edytuj}
+                    -->
+                </div>
+            </section>
+        </div>
+
+        <div class="modal fade" id="image-editor-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">Edycja zdjęcia</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="canvas-container bg-light js--canvas-container"></div>
+
+                        <hr>
+
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a href="#canvas-editor-filters" class="nav-link active" data-toggle="tab">
+                                    Filtry
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="#canvas-editor-drawing" data-toggle="tab" class="nav-link">
+                                    Rysowanie
+                                </a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div id="canvas-editor-filters" class="tab-pane fade show active">
+                                <div class="form-group row">
+                                    <label for="#filter-blur" class="col-sm-2 col-form-label">
+                                        Blur
+                                    </label>
+                                    <div class="col-sm-10">
+                                        <input type="range" data-filter-name="blur" data-filter-unit="px" value="0" min="0" max="100" step="1" class="form-control-range js--filter" id="filter-blur">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="#filter-grayscale" class="col-sm-2 col-form-label">
+                                        Grayscale
+                                    </label>
+                                    <div class="col-sm-10">
+                                        <input type="range" data-filter-name="grayscale" data-filter-unit="%" value="0" min="0" max="100" step="1" class="form-control-range js--filter" id="filter-grayscale">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="#filter-sepia" class="col-sm-2 col-form-label">
+                                        Sepia
+                                    </label>
+                                    <div class="col-sm-10">
+                                        <input type="range" data-filter-name="sepia" data-filter-unit="%" value="0" min="0" max="100" step="1" class="form-control-range js--filter" id="filter-sepia">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="#filter-brightness" class="col-sm-2 col-form-label">
+                                        Rozjaśnienie
+                                    </label>
+                                    <div class="col-sm-10">
+                                        <input type="range" data-filter-name="brightness" data-filter-unit="%" value="0" min="0" max="100" step="1" class="form-control-range js--filter" id="filter-brightness">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="#filter-contrast" class="col-sm-2 col-form-label">
+                                        Kontrast
+                                    </label>
+                                    <div class="col-sm-10">
+                                        <input type="range" data-filter-name="contrast" data-filter-unit="%" value="0" min="0" max="100" step="1" class="form-control-range js--filter" id="filter-contrast">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="#filter-hue-rotate" class="col-sm-2 col-form-label">
+                                        Hue rotate
+                                    </label>
+                                    <div class="col-sm-10">
+                                        <input type="range" data-filter-name="hue-rotate" data-filter-unit="deg" value="0" min="0" max="360" step="1" class="form-control-range js--filter" id="filter-hue-rotate">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="#filter-inversion" class="col-sm-2 col-form-label">
+                                        Inwersja
+                                    </label>
+                                    <div class="col-sm-10">
+                                        <input type="range" data-filter-name="invert" data-filter-unit="%" value="0" min="0" max="100" step="1" class="form-control-range js--filter" id="filter-inversion">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="#filter-opacity" class="col-sm-2 col-form-label">
+                                        Przezroczystość
+                                    </label>
+                                    <div class="col-sm-10">
+                                        <input type="range" data-filter-name="opacity" data-filter-unit="%" value="0" min="0" max="100" step="1" class="form-control-range js--filter" id="filter-opacity">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="#filter-saturate" class="col-sm-2 col-form-label">
+                                        Saturacja
+                                    </label>
+                                    <div class="col-sm-10">
+                                        <input type="range" data-filter-name="saturate" data-filter-unit="%" value="0" min="0" max="100" step="1" class="form-control-range js--filter" id="filter-saturate">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="canvas-editor-drawing" class="tab-pane fade">
+                                <div class="form-group row">
+                                    <label for="#canvas-editor-drawing-brush-color" class="col-sm-2 col-form-label">
+                                        Kolor pędzla
+                                    </label>
+                                    <div class="col-sm-10">
+                                        <input type="color" class="form-control-range" id="canvas-editor-drawing-brush-color">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="#canvas-editor-drawing-brush-weight" class="col-sm-2 col-form-label">
+                                        Grubość pędzla
+                                    </label>
+                                    <div class="col-sm-10">
+                                        <input type="range" class="form-control-range" value="5" min="1" max="50" step="1" id="canvas-editor-drawing-brush-weight">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Anuluj</button>
+
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-success js--image-editor-save-changes" data-dismiss="modal">Zapisz zmiany</button>
+
+                            <button type="button" class="btn btn-primary js--image-editor-save-as-new" data-dismiss="modal">Zapisz jako nowy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="vendor/jquery/jquery-3.3.1.slim.min.js"></script>
+        <script src="vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+        <script src="js/main.js"></script>
+    </body>
+</html>
+
+
+
