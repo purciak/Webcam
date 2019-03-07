@@ -5,10 +5,18 @@ This is not another clone app made with internet course. Application were made f
 
 Instalation:
 git clone https://github.com/purciak/Webcam/tree/master/Webcam
+
 cd WebCam/
+
 npm install
+
 npm start
+
 cd ..
+
 cd routes
+
 npm install
+
 npm start
+
